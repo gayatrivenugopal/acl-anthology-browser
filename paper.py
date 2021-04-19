@@ -13,15 +13,23 @@ class Paper:
         self.id = id(self)
         
     def save(self, year, month, title, auth_list, country, source, publisher):
+        """
+        Store the details of the paper in the instance.
+        """
         self.year = year if year is not None else ""
         self.month = month if month is not None else ""
         self.title = title if title is not None else ""
         self.auth_list = auth_list if len(auth_list) is not None else []
         self.country = country if country is not None else ""
-        self.source = source if source is not None else ""
+        self.source = source
         self.publisher = publisher if publisher is not None else ""
         
     def write(self, out_path):
+        """
+        Create a tab-delmited file.
+        Args:
+            out_path (str): path to the file in which the details should be stored
+        """
         if not os.path.exists(out_path):
             with open(out_path, "w", encoding = "utf-8") as file:
                 file.write("year\tmonth\ttitle\tauthors\tcountry\tsource\tpublisher\n")
