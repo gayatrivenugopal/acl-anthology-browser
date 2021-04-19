@@ -13,7 +13,6 @@ from paper import Paper
 
 def iterate(keys, node, year, month, country, publisher, source, out_path):
     if node is None:
-        print("returning")
         return
     if len(node.findall("paper")) == 0:
          for child in node:
@@ -25,10 +24,8 @@ def iterate(keys, node, year, month, country, publisher, source, out_path):
                 xmlstr = xmlstr.replace("<fixed-case>", "")
                 xmlstr = xmlstr.replace("</fixed-case>", "")
                 title = xmlstr[xmlstr.find("<title>")+7:xmlstr.find("</title>")]
-                print("Title: ", title)
             else:
                 title = paper.find("title").text
-                print(title)
             for key in keys:
                      if title is not None and title.find(key) != -1 or (paper.find("abstract") is not None and paper.find("abstract").text is not None and (paper.find("abstract").text).find(key) != -1):
                          #pass
@@ -39,7 +36,6 @@ def iterate(keys, node, year, month, country, publisher, source, out_path):
                                  auth_list.append(child.find("first").text + " " + child.find("last").text)
                          paper_object =  Paper()
                          paper_object.save(year, month, title, auth_list, country, source, publisher)
-                         print("here")
                          paper_object.write(out_path)
                          break
     return
@@ -75,8 +71,8 @@ def search_by_keyword(location, keys, out_path):
     for file in sorted(os.listdir(location)):
         parse(path + file, keywords, out_path)
         
-path = "/opt/Research/Bibliometric Analysis/acl-anthology/data/xml/"
-out_path = "/opt/Research/Bibliometric Analysis/acl-anthology/out.csv"
+path = "../acl-anthology/data/xml/"
+out_path = "../acl-anthology/out.csv"
 keywords = ["lexical simplification", "complex word identification", 
             "lexical complexity prediction", "lexical complexity", "complex word",
             "text simplification"]
